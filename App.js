@@ -1,12 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { SignUp } from './framework/Screens/SignUp';
-import { Intro } from './framework/screens/Intro';
+import { LogIn } from './framework/Screens/LogIn';
+import { IntroScreen } from './framework/Screens/IntroScreen';
 
 export default function App() {
   return (
     <View style={{ flex: 1 }}>
-      <Intro />
+      <IntroScreen />
     </View>
   );
 }

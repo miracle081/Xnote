@@ -7,13 +7,13 @@ export function AppBotton({ textStyle, onPress, children, style, textColor, butt
         btn: {
             // flex: touchable,
             borderRadius: 30,
-            backgroundColor: buttonColor || Theme.colors.primary,
+            backgroundColor: buttonColor || Theme.color.primary,
             padding: 13,
         },
     });
     return (
         <TouchableOpacity activeOpacity={0.7} onPress={onPress} style={[styles.btn, style]}>
-            <Text style={[{ color: textColor || "white", textAlign: "center", fontSize: 17, fontFamily: Theme.fonts.text700 }, textStyle]}>
+            <Text style={[{ color: textColor || "white", textAlign: "center", fontSize: 17, fontFamily: Theme.font.text700 }, textStyle]}>
                 {children}
             </Text>
         </TouchableOpacity>
