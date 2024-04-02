@@ -5,7 +5,7 @@ import { Theme } from '../components/Theme'
 export function Intro() {
   return (
     <View>
-      <Text styles={{color:Theme}}>Intro</Text>
+      <Text styles={{ color: Theme.color.primary }}>Intro</Text>
     </View>
   )
 }
