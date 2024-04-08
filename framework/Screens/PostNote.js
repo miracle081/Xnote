@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { AppTheme } from '../Components/AppTheme'
 
-export function LogIn() {
+export function PostNote() {
     return (
         <View>
-            <Text styles={{ color: AppTheme.color.primary }}>LogIn</Text>
+            <Text>PostNote</Text>
         </View>
     )
 }

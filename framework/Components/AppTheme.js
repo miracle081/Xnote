@@ -1,4 +1,4 @@
-export const Theme = {
+export const AppTheme = {
     color: {
         primary: "#7469B6",
         purple100: "#FFE6E6",
