@@ -14,7 +14,7 @@ web-build/
 *.p8
 *.p12
 *.key
-*.key.js
+*APIkeys.key.js
 *.mobileprovision
 
 # Metro
