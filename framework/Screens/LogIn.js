@@ -27,7 +27,7 @@ export function LogIn({ navigation }) {
                     style={styles.input}
                     onChangeText={(inp) => setPassword(inp)}
                 />
-                <AppBotton onPress={() => navigation.navigate("Home")} style={styles.btn}>Login</AppBotton>
+                <AppBotton onPress={() => navigation.navigate("HomePage")} style={styles.btn}>Login</AppBotton>
                 <Text style={{ marginTop: 20, alignSelf: "center", color: '#86469C' }}>Forgotten Password?</Text>
             </View>
         </SafeAreaView>

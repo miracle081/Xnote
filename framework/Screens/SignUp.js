@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { Button, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppBotton } from "../Components/AppButton";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "../Service/firebase";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { authentication, db } from "../Service/firebase";
+import { doc, setDoc } from "firebase/firestore";
 // import { Button } from "react-native-paper"
 
 export function SignUp({ navigation }) {
-    const [email, setEmail] = useState('mich@gmail.com')
-    const [password, setPassword] = useState('5643Mich');
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
 
     function createAccount() {
         createUserWithEmailAndPassword(authentication, email, password)
             .then(() => {
-                console.log("Account created successfully");
+                onAuthStateChanged(authentication, (user) => {
+                    setDoc(doc(db, "users", user.uid), {
+                        firstName,
+                        lastName,
+                        email,
+                        userUID: user.uid
+                    })
+                        .then(() => {
+                            navigation.navigate("HomePage")
+                        })
+                        .catch(e => console.log(e))
+                })
             })
             .catch(e => console.log(e))
     }
@@ -21,11 +35,25 @@ export function SignUp({ navigation }) {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <Text style={{ marginBottom: 20, fontSize: 20, fontWeight: "bold", color: "#86469C" }}>Login To Your Xnote Account</Text>
+
+                <Text>First name</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(inp) => setFirstName(inp)}
+                />
+
+                <Text>Last nate</Text>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(inp) => setLastName(inp)}
+                />
+
                 <Text>Email</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(inp) => setEmail(inp)}
                 />
+
                 <Text>Password</Text>
                 <TextInput
                     style={styles.input}
