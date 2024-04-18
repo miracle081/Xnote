@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Button, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppBotton } from "../Components/AppButton";
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { authentication, db } from "../Service/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { AppContext } from "../Components/globalVariables";
 // import { Button } from "react-native-paper"
 
 export function SignUp({ navigation }) {
+    const { setUserUID } = useContext(AppContext)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
@@ -23,6 +25,7 @@ export function SignUp({ navigation }) {
                         userUID: user.uid
                     })
                         .then(() => {
+                            setUserUID(user.uid);
                             navigation.navigate("HomePage")
                         })
                         .catch(e => console.log(e))
@@ -56,6 +59,7 @@ export function SignUp({ navigation }) {
 
                 <Text>Password</Text>
                 <TextInput
+                    secureTextEntry
                     style={styles.input}
                     onChangeText={(inp) => setPassword(inp)}
                 />

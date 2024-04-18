@@ -12,7 +12,7 @@ export function IntroScreen({ navigation }) {
           <Text style={{ textAlign: "center", color: "white", fontSize: 40, fontWeight: "bold" }}>X-Note</Text>
           <View style={{ gap: 10, marginBottom: 30 }}>
             <AppBotton onPress={() => navigation.navigate("SignUp")} touchable={9}>Get started</AppBotton>
-            <AppBotton onPress={() => navigation.navigate("HomePage")} style={styles.btn}>Login</AppBotton>
+            <AppBotton onPress={() => navigation.navigate("LogIn")} style={styles.btn}>Login</AppBotton>
           </View>
         </View>
       </ImageBackground>

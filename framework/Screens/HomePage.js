@@ -1,5 +1,5 @@
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { useContext, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppTheme } from '../Components/AppTheme'
 import { Profile } from './Profile'
@@ -7,18 +7,38 @@ import { PostNote } from './PostNote'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-reanimated-carousel';
+import { AppContext } from '../Components/globalVariables'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../Service/firebase'
 
 const carouselLinks = [
     require("../../assets/intro.jpg"),
     require("../../assets/icon.png"),
 ]
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
+    const { userUID, userInfo, setUserInfo } = useContext(AppContext)
     const screenWidth = Dimensions.get("screen").width
+
+    useEffect(() => {
+        getDoc(doc(db, "users", userUID))
+            .then(e => {
+                const data = e.data();
+                setUserInfo(data)
+            })
+            .catch(e => console.log(e))
+    }, [])
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>X-Note</Text>
-            <Ionicons name="person-circle-sharp" size={24} color="black" />
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+                    <Ionicons name="person-circle-sharp" size={30} color="black" />
+                    <Text style={{ fontSize: 17 }}>{userInfo.firstName} {userInfo.lastName}</Text>
+                </View>
+                <Text style={styles.header}>X-Note</Text>
+            </View>
             <View style={{ marginVertical: 10, }}>
                 <Carousel
                     loop
