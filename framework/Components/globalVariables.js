@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
-    const [userUID, setUserUID] = useState('');
+    const [userUID, setUserUID] = useState('EEZBIPGUIQg4l0cvodfcVYknNTn1');
     const [userInfo, setUserInfo] = useState({ image: null });
     const [preloader, setPreloader] = useState(false);
     const [docID, setDocID] = useState("");

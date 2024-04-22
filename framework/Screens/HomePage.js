@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-reanimated-carousel';
 import { AppContext } from '../Components/globalVariables'
-import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore'
+import { collection, doc, getDoc, limit, onSnapshot, orderBy, query, where } from 'firebase/firestore'
 import { db } from '../Service/firebase'
 
 const carouselLinks = [
@@ -22,8 +22,9 @@ function HomeScreen({ navigation }) {
     const [allNote, setAllNote] = useState([])
 
     function GetallNote() {
-        onSnapshot(collection(db, "notes"), (snapShot) => {
-            const rNote = []
+        const q = query(collection(db, "notes"), where("userUID", "==", userUID), orderBy("dateCreated", "desc"), limit(4));
+        onSnapshot(q, (snapShot) => {
+            const rNote = [];
             snapShot.forEach(item => {
                 rNote.push(item.data());
             })
@@ -71,13 +72,13 @@ function HomeScreen({ navigation }) {
                     renderItem={({ item }) => {
                         return (
                             <View style={styles.eachNote}>
-                                <Text style={styles.title}>This is the title of out note</Text>
-                                <Text numberOfLines={3} style={styles.body}>This is the body of out note, all the details of the note will be seen here, This is the body of out note, all the details of the note will be seen here,This is the body of out note, all the details of the note will be seen here,This is the body of out note, all the details of the note will be seen here</Text>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text numberOfLines={3} style={styles.body}>{item.body}</Text>
                                 <Text style={[styles.body, { textAlign: "right", fontFamily: null }]}><Text style={{ fontFamily: AppTheme.font.text700 }}>Updated:</Text> 3/3/2024, 4:30 pm</Text>
                             </View>
                         )
                     }}
-                    keyExtractor={({ item }) => item.dateCreated}
+                    key={({ item }) => { item.dateCreated }}
                 />
             </View>
         </SafeAreaView>
