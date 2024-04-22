@@ -8,8 +8,8 @@ import { AppContext } from "../Components/globalVariables";
 
 export function LogIn({ navigation }) {
     const { setUserUID } = useContext(AppContext)
-    const [email, setEmail] = useState('mich@gmail.com')
-    const [password, setPassword] = useState('5643Mich')
+    const [email, setEmail] = useState('john@gmail.com')
+    const [password, setPassword] = useState('password')
 
     function loginAccount() {
         signInWithEmailAndPassword(authentication, email, password)
@@ -30,11 +30,13 @@ export function LogIn({ navigation }) {
                 <TextInput
                     style={styles.input}
                     onChangeText={(inp) => setEmail(inp)}
+                    value="john@gmail.com"
                 />
                 <Text>Password</Text>
                 <TextInput
                     style={styles.input}
                     onChangeText={(inp) => setPassword(inp)}
+                    value="password"
                 />
                 <AppBotton onPress={loginAccount} style={styles.btn}>Login</AppBotton>
                 <Text style={{ marginTop: 20, alignSelf: "center", color: '#86469C' }}>Forgotten Password?</Text>

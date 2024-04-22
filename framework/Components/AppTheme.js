@@ -5,6 +5,7 @@ export const AppTheme = {
         purple300: "#E1AFD1",
         purple500: "#AD88C6",
         purple700: "#7469B6",
+        gray: "#7b7b7c",
     },
     font: {
         brand: "Pacifico_400Regular",

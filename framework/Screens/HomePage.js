@@ -1,5 +1,5 @@
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native'
-import { useContext, useEffect } from 'react'
+import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppTheme } from '../Components/AppTheme'
 import { Profile } from './Profile'
@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import Carousel from 'react-native-reanimated-carousel';
 import { AppContext } from '../Components/globalVariables'
-import { doc, getDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore'
 import { db } from '../Service/firebase'
 
 const carouselLinks = [
@@ -18,9 +18,21 @@ const carouselLinks = [
 
 function HomeScreen({ navigation }) {
     const { userUID, userInfo, setUserInfo } = useContext(AppContext)
-    const screenWidth = Dimensions.get("screen").width
+    const screenWidth = Dimensions.get("screen").width;
+    const [allNote, setAllNote] = useState([])
+
+    function GetallNote() {
+        onSnapshot(collection(db, "notes"), (snapShot) => {
+            const rNote = []
+            snapShot.forEach(item => {
+                rNote.push(item.data());
+            })
+            setAllNote(rNote)
+        })
+    }
 
     useEffect(() => {
+        GetallNote();
         getDoc(doc(db, "users", userUID))
             .then(e => {
                 const data = e.data();
@@ -43,18 +55,29 @@ function HomeScreen({ navigation }) {
                 <Carousel
                     loop
                     width={screenWidth - 20}
-                    height={300}
+                    height={200}
                     autoPlay={true}
                     data={carouselLinks}
                     style={{ borderRadius: 10 }}
                     scrollAnimationDuration={2000}
                     renderItem={({ index }) => (
-                        // <Image style={{ width: '100%', height: 200, borderRadius: 10, }} source={{ uri: carouselLinks[index] }} />
-                        <>
-                            <Image style={{ width: '100%', height: 200, borderRadius: 10, }} source={carouselLinks[index]} />
-                            <Text>This is at the index of {index}</Text>
-                        </>
+                        <Image style={{ width: '100%', height: 200, borderRadius: 10, }} source={carouselLinks[index]} />
                     )}
+                />
+            </View>
+            <View>
+                <FlatList
+                    data={allNote}
+                    renderItem={({ item }) => {
+                        return (
+                            <View style={styles.eachNote}>
+                                <Text style={styles.title}>This is the title of out note</Text>
+                                <Text numberOfLines={3} style={styles.body}>This is the body of out note, all the details of the note will be seen here, This is the body of out note, all the details of the note will be seen here,This is the body of out note, all the details of the note will be seen here,This is the body of out note, all the details of the note will be seen here</Text>
+                                <Text style={[styles.body, { textAlign: "right", fontFamily: null }]}><Text style={{ fontFamily: AppTheme.font.text700 }}>Updated:</Text> 3/3/2024, 4:30 pm</Text>
+                            </View>
+                        )
+                    }}
+                    keyExtractor={({ item }) => item.dateCreated}
                 />
             </View>
         </SafeAreaView>
@@ -70,7 +93,25 @@ const styles = StyleSheet.create({
     header: {
         // fontFamily: AppTheme.font.text600,
         fontSize: 25,
-    }
+    },
+    eachNote: {
+        backgroundColor: AppTheme.color.primary + 20,
+        borderRadius: 10,
+        padding: 10,
+        marginTop: 5
+    },
+    title: {
+        fontSize: 20,
+        fontFamily: AppTheme.font.text700,
+        marginBottom: 5,
+        textTransform: "capitalize"
+    },
+    body: {
+        fontSize: 16,
+        fontFamily: AppTheme.font.text500,
+        marginBottom: 5,
+        color: AppTheme.color.gray
+    },
 })
 
 const Tab = createBottomTabNavigator();

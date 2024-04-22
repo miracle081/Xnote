@@ -5,6 +5,7 @@ import { SignUp } from '../Screens/SignUp';
 import { HomePage } from '../Screens/HomePage';
 import { Profile } from '../Screens/Profile';
 import { PostNote } from '../Screens/PostNote';
+import { Charts } from '../Screens/Charts';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export function StackNavigation() {
             <Stack.Screen name='SignUp' component={SignUp} />
             <Stack.Screen name='Profile' component={Profile} />
             <Stack.Screen name='PostNote' component={PostNote} />
+            <Stack.Screen name='Charts' component={Charts} />
         </Stack.Navigator>
     )
 }
