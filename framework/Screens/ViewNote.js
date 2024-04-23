@@ -1,31 +1,54 @@
-import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
 import { AppBotton } from "../Components/AppButton"
 import { AppTheme } from "../Components/AppTheme"
-import { addDoc, collection, doc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore"
 import { db } from "../Service/firebase"
 import { AppContext } from "../Components/globalVariables"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 
 
-export function PostNote({ navigation }) {
+export function ViewNote({ navigation, route }) {
+    const { noteID } = route.params
     const { userUID, } = useContext(AppContext)
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
+    function deleteNote() {
+        deleteDoc(doc(db, "notes", noteID))
+            .then(() => {
+                Alert.alert("Delet", "Note deleted successfully")
+                navigation.goBack();
+            })
+            .catch(e => console.log(e))
+    }
 
-    function addNote() {
-        addDoc(collection(db, "notes"), {
+
+    function updateNote() {
+        updateDoc(doc(db, "notes", noteID), {
             title,
             body,
-            userUID,
-            dateCreated: new Date().getTime(),
-            shareNote: [],
+            updatedAt: new Date().getTime(),
         })
             .then(() => {
-                navigation.navigate("HomePage", { screen: "HomeScreen" })
-                console.log("Done");
+                Alert.alert("Update", "Note updated successfully")
             }).catch(e => console.log(e))
     }
+
+    function getData() {
+        getDoc(doc(db, "notes", noteID))
+            .then((rData) => {
+                const rdata = rData.data();
+                setTitle(rdata.title)
+                setBody(rdata.body)
+            })
+            .catch(e => console.log(e))
+
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
@@ -34,6 +57,7 @@ export function PostNote({ navigation }) {
                     onChangeText={(inp) => setTitle(inp)}
                     style={styles.input}
                     placeholder="Title"
+                    value={title}
                 />
                 <TextInput
                     placeholder="Enter note details"
@@ -41,8 +65,12 @@ export function PostNote({ navigation }) {
                     numberOfLines={30}
                     onChangeText={(inp) => setBody(inp)}
                     style={styles.input2}
+                    value={body}
                 />
-                <AppBotton onPress={addNote} style={styles.btn}>Create</AppBotton>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                    <AppBotton onPress={updateNote} style={styles.btn}>Create</AppBotton>
+                    <AppBotton onPress={deleteNote} style={styles.btn}>Delete Note</AppBotton>
+                </View>
             </View>
         </SafeAreaView>
     )
@@ -69,8 +97,9 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: AppTheme.color.purple500,
-        width: 120,
+        // width: 120,
         // marginLeft:85,
-        marginHorizontal: 85,
+        // marginHorizontal: 85,
+        flex: 1
     }
 })

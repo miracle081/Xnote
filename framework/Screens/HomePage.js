@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AppTheme } from '../Components/AppTheme'
@@ -26,8 +26,9 @@ function HomeScreen({ navigation }) {
         onSnapshot(q, (snapShot) => {
             const rNote = [];
             snapShot.forEach(item => {
-                rNote.push(item.data());
+                rNote.push({ ...item.data(), docId: item.id });
             })
+            // console.log(rNote);
             setAllNote(rNote)
         })
     }
@@ -71,11 +72,13 @@ function HomeScreen({ navigation }) {
                     data={allNote}
                     renderItem={({ item }) => {
                         return (
-                            <View style={styles.eachNote}>
+                            <TouchableOpacity onPress={() => { navigation.navigate("ViewNote", { noteID: item.docId }) }}
+
+                                style={styles.eachNote}>
                                 <Text style={styles.title}>{item.title}</Text>
                                 <Text numberOfLines={3} style={styles.body}>{item.body}</Text>
                                 <Text style={[styles.body, { textAlign: "right", fontFamily: null }]}><Text style={{ fontFamily: AppTheme.font.text700 }}>Updated:</Text> 3/3/2024, 4:30 pm</Text>
-                            </View>
+                            </TouchableOpacity>
                         )
                     }}
                     key={({ item }) => { item.dateCreated }}
