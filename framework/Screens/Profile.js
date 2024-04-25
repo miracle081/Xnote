@@ -41,8 +41,8 @@ export function Profile({ navigation }) {
                             <Text style={{ fontSize: 15, fontFamily: AppTheme.font.text500 }}>{userInfo.email}</Text>
                             <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}
                                 style={{ backgroundColor: AppTheme.color.primary, padding: 10, borderRadius: 100, width: 140, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 10 }}>
-                                <FontAwesomeIcon icon={faUserCircle} color={AppTheme.color.blueLight} />
-                                <Text style={{ fontSize: 13, alignItems: 'center', fontFamily: AppTheme.font.text600, marginLeft: 5, color: AppTheme.color.blueLight }}>Edit Profile</Text>
+                                <FontAwesomeIcon icon={faUserCircle} color={"white"} />
+                                <Text style={{ fontSize: 13, alignItems: 'center', fontFamily: AppTheme.font.text600, marginLeft: 5, color: "white" }}>Edit Profile</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -79,10 +79,10 @@ export function Profile({ navigation }) {
 
             <Modal
                 visible={modalVisibility}
-                animationType="slide"
+                animationType="fade"
                 transparent={true}
             >
-                <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.8)" }}>
+                <View style={{ flex: 1, backgroundColor: "rgba(0, 0, 0, 0.642)" }}>
                     <Pressable style={{ flex: 1 }} onPress={closeModal} >
                     </Pressable>
                     <View style={{ height: 200, backgroundColor: "#fcfbff", borderTopRightRadius: 20, borderTopLeftRadius: 20 }}>
@@ -112,8 +112,11 @@ export function Profile({ navigation }) {
                             </View>
                         </View>
                     </View>
+                    <Pressable style={{ flex: 1 }} onPress={closeModal} >
+                    </Pressable>
                 </View>
             </Modal>
+
         </SafeAreaView>
     )
 }

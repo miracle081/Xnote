@@ -10,7 +10,7 @@ import { formatMoney } from '../Components/FormatMoney'
 
 
 const validationSchema = yup.object({
-    amount: yup.number().required().min(200).max(100000),
+    amount: yup.number().required().min(200, "Amount must be greater than #200").max(100000),
 })
 
 export function Fund({ navigation }) {
@@ -28,7 +28,7 @@ export function Fund({ navigation }) {
             <View style={styles.container}>
                 <Formik
                     style={{ flex: 1 }}
-                    initialValues={{ amount: "" }}
+                    initialValues={{ amount: "", phone: "9097865768" }}
                     onSubmit={(value) => {
                         closeModal();
                         setAmount(Number(value.amount))
@@ -48,6 +48,7 @@ export function Fund({ navigation }) {
                                     style={[styles.input, { marginBottom: 0 }]}
                                     autoCapitalize="none"
                                     onChangeText={prop.handleChange("amount")}
+                                    value={prop.values.amount}
                                 />
                                 <Text style={[styles.error, { display: prop.errors.amount ? "flex" : "none" }]}>{prop.errors.amount}</Text>
 

@@ -22,7 +22,8 @@ export function SignUp({ navigation }) {
                         firstName,
                         lastName,
                         email,
-                        userUID: user.uid
+                        userUID: user.uid,
+                        balance: 0
                     })
                         .then(() => {
                             setUserUID(user.uid);

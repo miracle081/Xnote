@@ -65,12 +65,11 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         marginBottom: 25,
-        flex: 1
+        flex: 1,
+        fontFamily: AppTheme.font.text400,
     },
     btn: {
-        backgroundColor: AppTheme.color.purple500,
-        width: 120,
-        // marginLeft:85,
-        marginHorizontal: 85,
+        backgroundColor: AppTheme.color.primary,
+
     }
 })

@@ -8,6 +8,8 @@ import { PostNote } from '../Screens/PostNote';
 import { Charts } from '../Screens/Charts';
 import { ViewNote } from '../Screens/ViewNote';
 import { Fund } from '../Screens/Fund';
+import { EditProfile } from '../Screens/EditProfile';
+import { Pay } from '../Screens/Pay';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,8 @@ export function StackNavigation() {
             <Stack.Screen name='PostNote' component={PostNote} />
             <Stack.Screen name='ViewNote' component={ViewNote} />
             <Stack.Screen name='Fund' component={Fund} />
+            <Stack.Screen name='EditProfile' component={EditProfile} />
+            <Stack.Screen name='Pay' component={Pay} />
         </Stack.Navigator>
     )
 }
