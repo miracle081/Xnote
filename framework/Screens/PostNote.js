@@ -1,24 +1,32 @@
 import { Platform, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native"
 import { AppBotton } from "../Components/AppButton"
 import { AppTheme } from "../Components/AppTheme"
-import { addDoc, collection, doc } from "firebase/firestore"
+import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 import { db } from "../Service/firebase"
 import { AppContext } from "../Components/globalVariables"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import GenericTouchable from "react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable"
 
 
 export function PostNote({ navigation }) {
     const { userUID, setPreloader } = useContext(AppContext)
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
+    const [noteID, setNoteID] = useState('')
+
+    useEffect(() => {
+        setNoteID()
+    }, [])
+
 
 
     function addNote() {
         setPreloader(true)
-        addDoc(collection(db, "notes"), {
+        setDoc(doc(db, "notes", noteID), {
             title,
             body,
             userUID,
+            noteID,
             dateCreated: new Date().getTime(),
             shareNote: [],
         })
