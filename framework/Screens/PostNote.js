@@ -8,12 +8,13 @@ import { useContext, useState } from "react"
 
 
 export function PostNote({ navigation }) {
-    const { userUID, } = useContext(AppContext)
+    const { userUID, setPreloader } = useContext(AppContext)
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
 
     function addNote() {
+        setPreloader(true)
         addDoc(collection(db, "notes"), {
             title,
             body,
@@ -22,9 +23,13 @@ export function PostNote({ navigation }) {
             shareNote: [],
         })
             .then(() => {
+                setPreloader(false)
                 navigation.navigate("HomePage", { screen: "HomeScreen" })
                 console.log("Done");
-            }).catch(e => console.log(e))
+            }).catch(e => {
+                setPreloader(false)
+                console.log(e)
+            })
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>

@@ -7,19 +7,24 @@ import { AppContext } from "../Components/globalVariables";
 // import { Button } from "react-native-paper"
 
 export function LogIn({ navigation }) {
-    const { setUserUID } = useContext(AppContext)
+    const { setUserUID, setPreloader } = useContext(AppContext)
     const [email, setEmail] = useState('john@gmail.com')
     const [password, setPassword] = useState('password')
 
     function loginAccount() {
+        setPreloader(true)
         signInWithEmailAndPassword(authentication, email, password)
             .then(() => {
                 onAuthStateChanged(authentication, (user) => {
                     setUserUID(user.uid);
+                    setPreloader(false)
                     navigation.navigate("HomePage")
                 })
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                setPreloader(false)
+                console.log(e)
+            })
     }
 
     return (

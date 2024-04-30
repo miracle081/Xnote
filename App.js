@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Pacifico_400Regular } from "@expo-google-fonts/pacifico"
 import { Raleway_100Thin, Raleway_600SemiBold, Raleway_900Black, Raleway_800ExtraBold, Raleway_700Bold, Raleway_500Medium, Raleway_200ExtraLight, Raleway_300Light, Raleway_400Regular } from '@expo-google-fonts/raleway';
 import { AppProvider } from './framework/Components/globalVariables';
+import { Preloader } from './framework/Components/Preloader';
 
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
   return (
     <AppProvider>
       <NavigationContainer>
+        <Preloader />
         <StackNavigation />
       </NavigationContainer>
     </AppProvider>

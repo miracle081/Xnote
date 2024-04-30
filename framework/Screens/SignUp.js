@@ -8,13 +8,14 @@ import { AppContext } from "../Components/globalVariables";
 // import { Button } from "react-native-paper"
 
 export function SignUp({ navigation }) {
-    const { setUserUID } = useContext(AppContext)
+    const { setUserUID, setPreloader } = useContext(AppContext)
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
 
     function createAccount() {
+        setPreloader(true)
         createUserWithEmailAndPassword(authentication, email, password)
             .then(() => {
                 onAuthStateChanged(authentication, (user) => {
@@ -26,10 +27,14 @@ export function SignUp({ navigation }) {
                         balance: 0
                     })
                         .then(() => {
+                            setPreloader(false)
                             setUserUID(user.uid);
                             navigation.navigate("HomePage")
                         })
-                        .catch(e => console.log(e))
+                        .catch(e => {
+                            setPreloader(false)
+                            console.log(e)
+                        })
                 })
             })
             .catch(e => console.log(e))

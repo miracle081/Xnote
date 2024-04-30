@@ -17,7 +17,7 @@ const carouselLinks = [
 ]
 
 function HomeScreen({ navigation }) {
-    const { userUID, userInfo, setUserInfo } = useContext(AppContext)
+    const { userUID, userInfo, setUserInfo, setPreloader } = useContext(AppContext)
     const screenWidth = Dimensions.get("screen").width;
     const [allNote, setAllNote] = useState([])
 
@@ -34,11 +34,13 @@ function HomeScreen({ navigation }) {
     }
 
     useEffect(() => {
+        setPreloader(true)
         GetallNote();
         getDoc(doc(db, "users", userUID))
             .then(e => {
                 const data = e.data();
                 setUserInfo(data)
+                setPreloader(false)
             })
             .catch(e => console.log(e))
     }, [])

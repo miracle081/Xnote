@@ -9,13 +9,15 @@ import { useContext, useState, useEffect } from "react"
 
 export function ViewNote({ navigation, route }) {
     const { noteID } = route.params
-    const { userUID, } = useContext(AppContext)
+    const { userUID, setPreloader } = useContext(AppContext)
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
 
     function deleteNote() {
+        setPreloader(true)
         deleteDoc(doc(db, "notes", noteID))
             .then(() => {
+                setPreloader(false)
                 Alert.alert("Delet", "Note deleted successfully")
                 navigation.goBack();
             })
@@ -24,20 +26,24 @@ export function ViewNote({ navigation, route }) {
 
 
     function updateNote() {
+        setPreloader(true)
         updateDoc(doc(db, "notes", noteID), {
             title,
             body,
             updatedAt: new Date().getTime(),
         })
             .then(() => {
+                setPreloader(false)
                 Alert.alert("Update", "Note updated successfully")
             }).catch(e => console.log(e))
     }
 
     function getData() {
+        setPreloader(true)
         getDoc(doc(db, "notes", noteID))
             .then((rData) => {
                 const rdata = rData.data();
+                setPreloader(false)
                 setTitle(rdata.title)
                 setBody(rdata.body)
             })
@@ -68,7 +74,7 @@ export function ViewNote({ navigation, route }) {
                     value={body}
                 />
                 <View style={{ flexDirection: "row", gap: 10 }}>
-                    <AppBotton onPress={updateNote} style={styles.btn}>Create</AppBotton>
+                    <AppBotton onPress={updateNote} style={styles.btn}>Save</AppBotton>
                     <AppBotton onPress={deleteNote} style={styles.btn}>Delete Note</AppBotton>
                 </View>
             </View>
