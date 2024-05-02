@@ -8,5 +8,4 @@ export const firebaseAPI = {
     storageBucket: "x-note-5fd32.appspot.com",
     messagingSenderId: "220127384688",
     appId: "1:220127384688:web:f92c5814eba1d18c1050b5",
-    appId: "1:220127384688:web:f92c5814eba1d18c1050b5",
 }

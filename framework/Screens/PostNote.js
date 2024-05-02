@@ -5,7 +5,7 @@ import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 import { db } from "../Service/firebase"
 import { AppContext } from "../Components/globalVariables"
 import { useContext, useEffect, useState } from "react"
-import GenericTouchable from "react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable"
+import { generateRequestId } from "../Components/requestId"
 
 
 export function PostNote({ navigation }) {
@@ -15,7 +15,7 @@ export function PostNote({ navigation }) {
     const [noteID, setNoteID] = useState('')
 
     useEffect(() => {
-        setNoteID()
+        setNoteID(generateRequestId())
     }, [])
 
 
