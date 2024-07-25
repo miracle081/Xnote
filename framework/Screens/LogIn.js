@@ -10,7 +10,7 @@ export function LogIn({ navigation }) {
     const { setUserUID, setPreloader } = useContext(AppContext)
     const [email, setEmail] = useState('john@gmail.com')
     const [password, setPassword] = useState('password')
-
+    const change = () => setEmail(!email)
     function loginAccount() {
         setPreloader(true)
         signInWithEmailAndPassword(authentication, email, password)
