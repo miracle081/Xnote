@@ -22,7 +22,7 @@ export function PostNote({ navigation }) {
 
     function addNote() {
         setPreloader(true)
-        setDoc(doc(db, "notes", noteID), {
+        addDoc(doc(db, "notes"), {
             title,
             body,
             userUID,

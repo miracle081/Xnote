@@ -50,8 +50,8 @@ export function EditProfile({ navigation }) {
             allowsEditing: false,
             aspect: [4, 4],
             quality: 1,
-        })
-        // console.log(result);
+        });
+        console.log(result);
         if (!result.canceled) {
             const { uri } = result.assets[0];
             setImage(uri)
@@ -87,7 +87,7 @@ export function EditProfile({ navigation }) {
     async function uplaodToStorage() {
         try {
             let response = await fetch(image);
-            console.log(response);
+            // console.log(response);
             const imageBlob = await response.blob()
             await imgStorage().ref().child(`ProfileImages/${userUID}`).put(imageBlob);
         } catch {

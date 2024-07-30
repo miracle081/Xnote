@@ -8,12 +8,12 @@ import firebase from "firebase/compat/app";
 
 
 const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
+    apiKey: "AIzaSyBpuHeiWgqh1RIx8Io0EFUB8qVfMUqZ41s",
+    authDomain: "x-note-5fd32.firebaseapp.com",
+    projectId: "x-note-5fd32",
+    storageBucket: "x-note-5fd32.appspot.com",
+    messagingSenderId: "220127384688",
+    appId: "1:220127384688:web:f92c5814eba1d18c1050b5",
 }
 
 if (!firebase.apps.length) {

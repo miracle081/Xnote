@@ -16,7 +16,7 @@ export function Pay({ navigation, route }) {
             <Paystack
                 paystackKey={"pk_test_92fcc0077ec7f42a73ff01c87db79c3698b06dec"}
                 amount={amount + ((1.8 / 100) * amount)}
-                billingEmail={userInfo.email}
+                billingEmail={"miracleobafemimo@gmail.com"}
                 activityIndicatorColor={AppTheme.color.primary}
                 onCancel={() => {
                     navigation.goBack()
