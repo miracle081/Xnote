@@ -22,12 +22,13 @@ export function PostNote({ navigation }) {
 
     function addNote() {
         setPreloader(true)
-        addDoc(doc(db, "notes"), {
+        addDoc(collection(db, "notes"), {
             title,
             body,
             userUID,
             noteID,
             dateCreated: new Date().getTime(),
+            updatedAt: new Date().getTime(),
             shareNote: [],
         })
             .then(() => {

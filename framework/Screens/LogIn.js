@@ -35,7 +35,7 @@ export function LogIn({ navigation }) {
                 <TextInput
                     style={styles.input}
                     onChangeText={(inp) => setEmail(inp)}
-                    value="john@gmail.com"
+                    value={email}
                 />
                 <Text>Password</Text>
                 <TextInput

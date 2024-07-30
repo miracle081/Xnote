@@ -73,13 +73,14 @@ function HomeScreen({ navigation }) {
                 <FlatList
                     data={allNote}
                     renderItem={({ item }) => {
+                        // console.log(item.updatedAt);
                         return (
                             <TouchableOpacity onPress={() => { navigation.navigate("ViewNote", { noteID: item.docId }) }}
 
                                 style={styles.eachNote}>
                                 <Text style={styles.title}>{item.title}</Text>
                                 <Text numberOfLines={3} style={styles.body}>{item.body}</Text>
-                                <Text style={[styles.body, { textAlign: "right", fontFamily: null }]}><Text style={{ fontFamily: AppTheme.font.text700 }}>Updated:</Text> 3/3/2024, 4:30 pm</Text>
+                                <Text style={[styles.body, { textAlign: "right", fontFamily: null, display: item.updatedAt ? "flex" : "none" }]}><Text style={{ fontFamily: AppTheme.font.text700 }}>Updated:</Text> {new Date(item.updatedAt).toLocaleString()}</Text>
                             </TouchableOpacity>
                         )
                     }}
